@@ -1,0 +1,1041 @@
+
+
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="theme-color" content="#111827">
+
+<title>STUDY MODE</title>
+
+<style>
+
+:root {
+
+  --navy:#111827;
+
+  --navy2:#1e293b;
+
+  --blue:#60a5fa;
+
+  --blue2:#3b82f6;
+
+  --mint:#75c7a2;
+
+  --bg:#f3f6fb;
+
+  --white:#fff;
+
+  --text:#172033;
+
+  --muted:#8190a5;
+
+  --line:#e6ebf2;
+
+}
+
+*{box-sizing:border-box}
+
+body{
+
+  margin:0;background:var(--bg);color:var(--text);
+
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+}
+
+.app{max-width:720px;margin:auto;padding:22px 17px 100px}
+
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+
+.logo{font-weight:900;font-size:20px;letter-spacing:1px;color:var(--navy)}
+
+.logo span{color:var(--blue2)}
+
+.date{font-size:12px;color:var(--muted)}
+
+.hero{
+
+  background:linear-gradient(135deg,#111827,#263b5b);
+
+  color:white;border-radius:23px;padding:24px;margin-bottom:17px;
+
+}
+
+.eyebrow{font-size:10px;letter-spacing:2px;color:#b8c9df}
+
+.hero h1{font-size:48px;margin:12px 0 5px}
+
+.hero p{font-size:13px;color:#c3d1e3;margin:0 0 20px}
+
+.progress{height:8px;background:#40516b;border-radius:20px;overflow:hidden}
+
+.progress div{height:100%;background:var(--mint);width:0;transition:.3s}
+
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:#d2dbea;margin-top:9px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0}
+
+.stat,.card{
+
+  background:white;border:1px solid var(--line);
+
+  border-radius:17px;padding:15px;
+
+}
+
+.stat small{font-size:10px;color:var(--muted)}
+
+.stat strong{display:block;font-size:21px;margin-top:7px;color:var(--navy)}
+
+.section{margin-top:25px}
+
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+
+.section-title h2{font-size:16px;margin:0}
+
+.muted{font-size:11px;color:var(--muted)}
+
+.card{margin-bottom:10px}
+
+.task{
+
+  display:flex;align-items:center;gap:11px;
+
+  background:white;border:1px solid var(--line);
+
+  border-radius:14px;padding:13px;margin-bottom:9px;
+
+}
+
+.check{
+
+  width:22px;height:22px;border:1.5px solid #bdc9d9;
+
+  border-radius:7px;background:white;color:white;flex-shrink:0;
+
+}
+
+.check.done{background:var(--blue2);border-color:var(--blue2)}
+
+.task-info{flex:1;min-width:0}
+
+.task-info b{font-size:13px}
+
+.task-info small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+
+.task-time{font-size:11px;color:var(--muted)}
+
+button{cursor:pointer;font:inherit}
+
+.btn{
+
+  border:0;border-radius:11px;background:var(--blue2);
+
+  color:white;padding:11px 15px;font-size:12px;font-weight:700;
+
+}
+
+.btn.secondary{background:#edf4ff;color:#3478c9}
+
+.btn.full{width:100%}
+
+.btn.small{padding:8px 11px}
+
+input,select{
+
+  width:100%;padding:12px;border:1px solid var(--line);
+
+  border-radius:10px;background:#f9fbff;color:var(--text);
+
+  font:inherit;outline:none;
+
+}
+
+input:focus,select:focus{border-color:var(--blue)}
+
+.field{margin:12px 0}
+
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.nav{
+
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+
+  width:min(720px,100%);background:white;border-top:1px solid var(--line);
+
+  display:grid;grid-template-columns:repeat(5,1fr);
+
+  padding:10px 5px calc(10px + env(safe-area-inset-bottom));
+
+  z-index:10;
+
+}
+
+.nav button{border:0;background:none;color:#8793a5;font-size:10px}
+
+.nav button.active{color:var(--blue2);font-weight:800}
+
+.nav span{display:block;font-size:19px;margin-bottom:4px}
+
+.view{display:none}
+
+.view.active{display:block}
+
+.exam{
+
+  background:white;border:1px solid var(--line);
+
+  padding:16px;border-radius:16px;margin-bottom:12px;
+
+}
+
+.exam h3{font-size:15px;margin:10px 0 5px}
+
+.unit{
+
+  display:flex;align-items:center;gap:10px;
+
+  border-top:1px solid var(--line);padding:10px 0;
+
+  font-size:12px;
+
+}
+
+.unit span{flex:1}
+
+.unit small{color:var(--muted)}
+
+.pill{background:#edf4ff;color:#3478c9;border-radius:20px;padding:5px 9px;font-size:10px}
+
+.empty{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+
+.timer{text-align:center;padding:25px 10px}
+
+.clock{font-size:48px;font-weight:850;color:var(--navy);margin:25px 0}
+
+.timer-buttons{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
+
+.chart{display:flex;align-items:end;gap:9px;height:145px;padding-top:15px}
+
+.barbox{flex:1;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px}
+
+.bar{width:22px;background:#83b8f3;border-radius:6px 6px 0 0;min-height:2px}
+
+.barbox small{font-size:10px;color:var(--muted)}
+
+.subject-bar{height:7px;background:#edf1f7;border-radius:10px;margin-top:7px;overflow:hidden}
+
+.subject-bar div{height:100%;background:var(--blue2)}
+
+@media(max-width:400px){
+
+ .app{padding:17px 13px 95px}
+
+ .hero h1{font-size:42px}
+
+ .form-grid{grid-template-columns:1fr}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+  <div class="logo">STUDY <span>MODE</span></div>
+
+  <div class="date" id="today"></div>
+
+</header>
+
+<!-- HOME -->
+
+<section class="view active" id="home">
+
+  <div class="hero">
+
+    <div class="eyebrow">NEXT EXAMINATION</div>
+
+    <h1 id="dday">D--</h1>
+
+    <p id="nextExam">시험을 등록해 주세요.</p>
+
+    <div class="progress"><div id="overallBar"></div></div>
+
+    <div class="progress-label">
+
+      <span>전체 시험 범위 진도</span>
+
+      <b id="overallPct">0%</b>
+
+    </div>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat"><small>TO STUDY</small><strong id="remaining">0</strong></div>
+
+    <div class="stat"><small>STUDY TIME</small><strong id="todayTime">0m</strong></div>
+
+    <div class="stat"><small>STREAK</small><strong id="streak">0 🔥</strong></div>
+
+  </div>
+
+  <div class="section">
+
+    <div class="section-title">
+
+      <h2>Today's Study</h2>
+
+      <span class="muted">오늘의 공부</span>
+
+    </div>
+
+    <div id="todayTasks"></div>
+
+    <button class="btn full" onclick="go('planner')">공부 계획 확인하기 →</button>
+
+  </div>
+
+  <div class="section">
+
+    <div class="section-title"><h2>Upcoming Exams</h2></div>
+
+    <div id="upcoming"></div>
+
+  </div>
+
+</section>
+
+<!-- EXAMS -->
+
+<section class="view" id="exams">
+
+  <div class="section-title"><h2>시험 관리</h2><span class="muted">EXAM COUNTDOWN</span></div>
+
+  <div class="card">
+
+    <b style="font-size:14px">새 시험 등록</b>
+
+    <div class="form-grid">
+
+      <div class="field">
+
+        <label>과목명</label>
+
+        <input id="subject" placeholder="예: 수학">
+
+      </div>
+
+      <div class="field">
+
+        <label>시험 날짜</label>
+
+        <input id="examDate" type="date">
+
+      </div>
+
+    </div>
+
+    <div class="field">
+
+      <label>시험 범위 (쉼표로 구분)</label>
+
+      <input id="units" placeholder="함수, 유리함수, 무리함수">
+
+    </div>
+
+    <button class="btn full" onclick="addExam()">시험 추가하기</button>
+
+  </div>
+
+  <div id="examList"></div>
+
+</section>
+
+<!-- PLANNER -->
+
+<section class="view" id="planner">
+
+  <div class="section-title"><h2>Daily Study Plan</h2></div>
+
+  <div class="card">
+
+    <b style="font-size:13px">시험 범위 자동 분배</b>
+
+    <p class="muted">남은 시험 날짜와 미완료 단원을 기준으로 계획을 생성해요.</p>
+
+    <button class="btn full" onclick="generatePlans()">공부 계획 자동 생성</button>
+
+  </div>
+
+  <div id="planList"></div>
+
+</section>
+
+<!-- FOCUS -->
+
+<section class="view" id="focus">
+
+  <div class="section-title"><h2>Focus Timer</h2></div>
+
+  <div class="card timer">
+
+    <div class="field">
+
+      <label>공부 과목</label>
+
+      <select id="timerSubject"><option value="">과목 선택</option></select>
+
+    </div>
+
+    <div class="clock" id="clock">25:00</div>
+
+    <div class="timer-buttons">
+
+      <button class="btn secondary" onclick="setTimer(25)">25분</button>
+
+      <button class="btn secondary" onclick="setTimer(50)">50분</button>
+
+      <button class="btn secondary" onclick="setTimer(5)">5분 휴식</button>
+
+    </div>
+
+    <div class="timer-buttons" style="margin-top:18px">
+
+      <button class="btn" id="startBtn" onclick="toggleTimer()">시작</button>
+
+      <button class="btn secondary" onclick="resetTimer()">초기화</button>
+
+    </div>
+
+    <p class="muted" style="margin-top:18px">타이머가 끝나면 공부 시간이 자동 기록돼요.</p>
+
+  </div>
+
+</section>
+
+<!-- RECORD -->
+
+<section class="view" id="record">
+
+  <div class="section-title"><h2>Study Analytics</h2></div>
+
+  <div class="stats">
+
+    <div class="stat"><small>THIS WEEK</small><strong id="weekTime">0h</strong></div>
+
+    <div class="stat"><small>COMPLETED</small><strong id="completed">0</strong></div>
+
+    <div class="stat"><small>STREAK</small><strong id="recordStreak">0 🔥</strong></div>
+
+  </div>
+
+  <div class="card">
+
+    <b style="font-size:13px">최근 7일 공부 시간</b>
+
+    <div class="chart" id="chart"></div>
+
+  </div>
+
+  <div class="card">
+
+    <b style="font-size:13px">과목별 공부 시간</b>
+
+    <div id="subjectStats"></div>
+
+  </div>
+
+  <div class="card">
+
+    <b style="font-size:13px">공부 기록 달력</b>
+
+    <div id="calendar" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:15px"></div>
+
+  </div>
+
+</section>
+
+</div>
+
+<nav class="nav">
+
+  <button class="active" onclick="go('home',this)"><span>⌂</span>홈</button>
+
+  <button onclick="go('exams',this)"><span>▣</span>시험</button>
+
+  <button onclick="go('planner',this)"><span>☷</span>플래너</button>
+
+  <button onclick="go('focus',this)"><span>◷</span>집중</button>
+
+  <button onclick="go('record',this)"><span>▥</span>기록</button>
+
+</nav>
+
+<script>
+
+const KEY='studyModeData';
+
+let data=JSON.parse(localStorage.getItem(KEY)||'{"exams":[],"plans":{},"logs":[]}');
+
+function save(){
+
+  localStorage.setItem(KEY,JSON.stringify(data));
+
+  render();
+
+}
+
+function today(){
+
+  return new Date().toISOString().slice(0,10);
+
+}
+
+function days(date){
+
+  return Math.ceil((new Date(date+'T00:00:00')-new Date(today()+'T00:00:00'))/86400000);
+
+}
+
+function fmt(date){
+
+  return new Date(date+'T00:00:00').toLocaleDateString('ko-KR',{month:'numeric',day:'numeric'});
+
+}
+
+function go(id,btn){
+
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+
+  if(btn)btn.classList.add('active');
+
+  else document.querySelectorAll('.nav button')[['home','exams','planner','focus','record'].indexOf(id)].classList.add('active');
+
+  render();
+
+}
+
+function esc(s){
+
+  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+}
+
+function units(){
+
+  return data.exams.flatMap(e=>e.units.map(u=>({...u,exam:e})));
+
+}
+
+function percent(){
+
+  let a=units();
+
+  return a.length?Math.round(a.filter(u=>u.done).length/a.length*100):0;
+
+}
+
+function addExam(){
+
+  let name=document.getElementById('subject').value.trim();
+
+  let date=document.getElementById('examDate').value;
+
+  let raw=document.getElementById('units').value;
+
+  if(!name||!date||!raw.trim()){
+
+    alert('과목, 시험 날짜, 범위를 모두 입력해 주세요.');
+
+    return;
+
+  }
+
+  if(days(date)<0){alert('오늘 이후의 날짜를 입력해 주세요.');return;}
+
+  data.exams.push({
+
+    id:Date.now(),
+
+    name,date,
+
+    units:raw.split(/[,\n]/).map(x=>x.trim()).filter(Boolean).map((name,i)=>({
+
+      id:Date.now()+'_'+i,name,done:false
+
+    }))
+
+  });
+
+  data.exams.sort((a,b)=>a.date.localeCompare(b.date));
+
+  document.getElementById('subject').value='';
+
+  document.getElementById('examDate').value='';
+
+  document.getElementById('units').value='';
+
+  generatePlans(false);
+
+  save();
+
+}
+
+function deleteExam(id){
+
+  if(!confirm('이 시험을 삭제할까요?'))return;
+
+  data.exams=data.exams.filter(e=>e.id!==id);
+
+  generatePlans(false);
+
+  save();
+
+}
+
+function toggleUnit(eid,uid){
+
+  let e=data.exams.find(x=>x.id==eid);
+
+  let u=e.units.find(x=>x.id==uid);
+
+  u.done=!u.done;
+
+  generatePlans(false);
+
+  save();
+
+}
+
+function generatePlans(show=true){
+
+  let plans={};
+
+  data.exams.forEach(e=>{
+
+    let remaining=e.units.filter(u=>!u.done);
+
+    if(!remaining.length)return;
+
+    // 시험 전날까지 남은 날짜를 활용
+
+    let daysAvailable=Math.max(1,days(e.date));
+
+    remaining.forEach((u,i)=>{
+
+      let index=Math.min(
+
+        daysAvailable-1,
+
+        Math.floor(i*daysAvailable/remaining.length)
+
+      );
+
+      let d=new Date(today()+'T00:00:00');
+
+      d.setDate(d.getDate()+index);
+
+      let key=d.toISOString().slice(0,10);
+
+      if(!plans[key])plans[key]=[];
+
+      plans[key].push({
+
+        id:String(e.id)+'_'+u.id,
+
+        examId:e.id,unitId:u.id,
+
+        subject:e.name,unit:u.name,
+
+        done:false,minutes:40
+
+      });
+
+    });
+
+  });
+
+  // 기존 체크 상태 유지
+
+  Object.keys(plans).forEach(k=>{
+
+    plans[k].forEach(t=>{
+
+      let old=(data.plans[k]||[]).find(x=>x.unitId===t.unitId);
+
+      if(old)t.done=old.done;
+
+    });
+
+  });
+
+  data.plans=plans;
+
+  if(show)alert('남은 시험 범위를 다시 분배했어요!');
+
+  save();
+
+}
+
+function toggleTask(date,id){
+
+  let t=(data.plans[date]||[]).find(x=>x.id===id);
+
+  if(!t)return;
+
+  t.done=!t.done;
+
+  let e=data.exams.find(x=>x.id==t.examId);
+
+  let u=e&&e.units.find(x=>x.id===t.unitId);
+
+  if(u)u.done=t.done;
+
+  generatePlans(false);
+
+}
+
+function streak(){
+
+  let dates=[...new Set(data.logs.map(x=>x.date))];
+
+  let n=0,d=new Date(today()+'T00:00:00');
+
+  while(dates.includes(d.toISOString().slice(0,10))){
+
+    n++;d.setDate(d.getDate()-1);
+
+  }
+
+  return n;
+
+}
+
+function render(){
+
+  document.getElementById('today').textContent=
+
+    new Date().toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'short'});
+
+  document.getElementById('examDate').min=today();
+
+  let next=data.exams.filter(e=>days(e.date)>=0)
+
+    .sort((a,b)=>a.date.localeCompare(b.date))[0];
+
+  document.getElementById('dday').textContent=next?
+
+    (days(next.date)===0?'D-DAY':'D-'+days(next.date)):'D--';
+
+  document.getElementById('nextExam').textContent=next?
+
+    next.name+' · '+fmt(next.date):'시험을 등록해 주세요.';
+
+  let p=percent();
+
+  document.getElementById('overallBar').style.width=p+'%';
+
+  document.getElementById('overallPct').textContent=p+'%';
+
+  document.getElementById('remaining').textContent=units().filter(u=>!u.done).length;
+
+  let todayMinutes=data.logs.filter(x=>x.date===today())
+
+    .reduce((a,x)=>a+x.minutes,0);
+
+  document.getElementById('todayTime').textContent=todayMinutes+'m';
+
+  document.getElementById('streak').textContent=streak()+' 🔥';
+
+  let tasks=data.plans[today()]||[];
+
+  document.getElementById('todayTasks').innerHTML=tasks.length?
+
+    tasks.map(t=>`
+
+      <div class="task">
+
+        <button class="check ${t.done?'done':''}" onclick="toggleTask('${today()}','${t.id}')">${t.done?'✓':''}</button>
+
+        <div class="task-info"><b>${esc(t.subject)} · ${esc(t.unit)}</b>
+
+        <small>${t.done?'완료':'오늘 공부할 단원'}</small></div>
+
+        <span class="task-time">${t.minutes}분</span>
+
+      </div>`).join(''):
+
+    '<div class="card empty">오늘 배정된 공부가 없어요.<br>시험을 등록하고 계획을 생성해 보세요.</div>';
+
+  document.getElementById('upcoming').innerHTML=data.exams.length?
+
+    data.exams.slice(0,3).map(e=>`
+
+      <div class="task"><div class="task-info"><b>${esc(e.name)}</b>
+
+      <small>${fmt(e.date)} · ${e.units.filter(u=>u.done).length}/${e.units.length} 완료</small></div>
+
+      <span class="pill">${days(e.date)===0?'D-DAY':'D-'+days(e.date)}</span></div>`).join(''):
+
+    '<div class="card empty">등록된 시험이 없어요.</div>';
+
+  document.getElementById('examList').innerHTML=data.exams.length?
+
+    data.exams.map(e=>`
+
+      <div class="exam">
+
+        <div style="display:flex;justify-content:space-between">
+
+          <span class="pill">${days(e.date)===0?'D-DAY':'D-'+days(e.date)}</span>
+
+          <button class="btn secondary small" onclick="deleteExam(${e.id})">삭제</button>
+
+        </div>
+
+        <h3>${esc(e.name)} · ${fmt(e.date)}</h3>
+
+        <div class="progress"><div style="width:${e.units.filter(u=>u.done).length/e.units.length*100}%"></div></div>
+
+        <p class="muted">${e.units.filter(u=>u.done).length}/${e.units.length} 단원 완료</p>
+
+        ${e.units.map(u=>`
+
+          <div class="unit">
+
+            <button class="check ${u.done?'done':''}" onclick="toggleUnit(${e.id},'${u.id}')">${u.done?'✓':''}</button>
+
+            <span>${esc(u.name)}</span>
+
+            <small>${u.done?'완료':'미완료'}</small>
+
+          </div>`).join('')}
+
+      </div>`).join(''):
+
+    '<div class="card empty">아직 등록된 시험이 없어요.</div>';
+
+  let html='';
+
+  Object.keys(data.plans).sort().forEach(k=>{
+
+    if(!data.plans[k].length)return;
+
+    html+=`<div class="section-title"><h2>${fmt(k)}</h2></div>`;
+
+    html+=data.plans[k].map(t=>`
+
+      <div class="task">
+
+        <button class="check ${t.done?'done':''}" onclick="toggleTask('${k}','${t.id}')">${t.done?'✓':''}</button>
+
+        <div class="task-info"><b>${esc(t.subject)} · ${esc(t.unit)}</b>
+
+        <small>${t.done?'완료':'예정된 공부'}</small></div>
+
+        <span class="task-time">${t.minutes}분</span>
+
+      </div>`).join('');
+
+  });
+
+  document.getElementById('planList').innerHTML=html||
+
+    '<div class="card empty">시험을 등록하고 계획을 생성해 주세요.</div>';
+
+  let subjects=[...new Set(data.exams.map(e=>e.name))];
+
+  let select=document.getElementById('timerSubject');
+
+  let previous=select.value;
+
+  select.innerHTML='<option value="">과목 선택</option>'+
+
+    subjects.map(s=>`<option>${esc(s)}</option>`).join('');
+
+  select.value=subjects.includes(previous)?previous:'';
+
+  renderRecords();
+
+}
+
+function renderRecords(){
+
+  let week=[];
+
+  for(let i=6;i>=0;i--){
+
+    let d=new Date();d.setDate(d.getDate()-i);
+
+    let k=d.toISOString().slice(0,10);
+
+    week.push({
+
+      date:k,
+
+      day:['일','월','화','수','목','금','토'][d.getDay()],
+
+      minutes:data.logs.filter(x=>x.date===k).reduce((a,x)=>a+x.minutes,0)
+
+    });
+
+  }
+
+  let total=week.reduce((a,x)=>a+x.minutes,0);
+
+  document.getElementById('weekTime').textContent=(total/60).toFixed(1)+'h';
+
+  document.getElementById('completed').textContent=units().filter(u=>u.done).length;
+
+  document.getElementById('recordStreak').textContent=streak()+' 🔥';
+
+  let max=Math.max(60,...week.map(x=>x.minutes));
+
+  document.getElementById('chart').innerHTML=week.map(x=>`
+
+    <div class="barbox">
+
+      <div class="bar" style="height:${x.minutes/max*100}%"></div>
+
+      <small>${x.day}</small>
+
+    </div>`).join('');
+
+  let sums={};
+
+  data.logs.forEach(x=>sums[x.subject]=(sums[x.subject]||0)+x.minutes);
+
+  document.getElementById('subjectStats').innerHTML=
+
+    Object.entries(sums).length?
+
+    Object.entries(sums).map(([s,m])=>`
+
+      <div style="display:flex;justify-content:space-between;margin-top:13px;font-size:12px">
+
+        <b>${esc(s)}</b><span>${m}분</span>
+
+      </div>
+
+      <div class="subject-bar"><div style="width:${m/Math.max(1,total)*100}%"></div></div>`).join(''):
+
+    '<p class="muted">아직 기록이 없어요.</p>';
+
+  let calendar='';
+
+  for(let i=20;i>=0;i--){
+
+    let d=new Date();d.setDate(d.getDate()-i);
+
+    let k=d.toISOString().slice(0,10);
+
+    let active=data.logs.some(x=>x.date===k);
+
+    calendar+=`<div style="aspect-ratio:1;border-radius:7px;background:${active?'#60a5fa':'#edf1f7'};color:${active?'white':'#8491a5'};display:grid;place-items:center;font-size:10px">${d.getDate()}</div>`;
+
+  }
+
+  document.getElementById('calendar').innerHTML=calendar;
+
+}
+
+// TIMER
+
+let seconds=25*60,totalSeconds=25*60,interval=null,running=false,breakMode=false;
+
+function updateClock(){
+
+  let m=Math.floor(seconds/60),s=seconds%60;
+
+  document.getElementById('clock').textContent=
+
+    String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+
+}
+
+function setTimer(m){
+
+  pauseTimer();seconds=m*60;totalSeconds=seconds;
+
+  breakMode=m===5;updateClock();
+
+}
+
+function pauseTimer(){
+
+  running=false;clearInterval(interval);
+
+  document.getElementById('startBtn').textContent='시작';
+
+}
+
+function resetTimer(){
+
+  pauseTimer();seconds=totalSeconds;updateClock();
+
+}
+
+function toggleTimer(){
+
+  if(running){pauseTimer();return}
+
+  running=true;document.getElementById('startBtn').textContent='일시정지';
+
+  interval=setInterval(()=>{
+
+    seconds--;updateClock();
+
+    if(seconds<=0){
+
+      pauseTimer();
+
+      if(!breakMode){
+
+        let subject=document.getElementById('timerSubject').value||'자유 공부';
+
+        data.logs.push({date:today(),subject,minutes:Math.round(totalSeconds/60)});
+
+        save();
+
+        alert('집중 완료! 공부 기록에 저장했어요.');
+
+      }else alert('휴식이 끝났어요!');
+
+      setTimer(25);
+
+    }
+
+  },1000);
+
+}
+
+render();
+
+updateClock();
+
+</script>
+
+</body>
+
+</html>
